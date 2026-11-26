@@ -483,27 +483,41 @@ a {
 
 @media (max-width: 650px) {
   .navbar {
-    height: auto;
-    min-height: 75px;
-    padding: 16px 5%;
-  }
+  height: auto;
+  min-height: 75px;
+  padding: 16px 5%;
+  flex-wrap: wrap;
+  gap: 15px;
+}
 
-  .brand {
-    font-size: 15px;
-  }
+.brand {
+  font-size: 15px;
+}
 
-  .nav-links {
-    gap: 12px;
-  }
+.nav-links {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  font-size: 12px;
+}
 
-  .nav-links > a:not(.nav-register) {
-    display: none;
-  }
+.nav-links > a {
+  display: inline-flex;
+}
 
-  .nav-register {
-    padding: 10px 12px;
-    font-size: 11px;
-  }
+.nav-admin {
+  padding: 10px 12px;
+  border: 1px solid #30466b;
+  border-radius: 8px;
+}
+
+.nav-register {
+  padding: 10px 12px;
+  font-size: 11px;
+}
 
   .hero {
     padding: 75px 6%;
