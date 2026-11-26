@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://codeforge-academy-delta.vercel.app/sitemap.xml
