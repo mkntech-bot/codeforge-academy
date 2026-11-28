@@ -15,6 +15,7 @@ import {
   Copy,
   ExternalLink,
   Award,
+  Sparkles,
 } from "lucide-react";
 
 function Dashboard() {
@@ -26,6 +27,7 @@ function Dashboard() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
+  const [testingAi, setTestingAi] = useState(false);
 
   const [editingStudent, setEditingStudent] = useState(null);
   const [newStudentName, setNewStudentName] = useState("");
@@ -91,6 +93,36 @@ function Dashboard() {
     setTimeout(() => {
       setNotice("");
     }, 4000);
+  }
+
+  // TEST AI MARKING CONNECTION (ADMIN ONLY)
+  async function handleTestAiMarking() {
+    setTestingAi(true);
+    setNotice("Testing AI marking connection...");
+
+    try {
+      const { data, error } = await supabase.functions.invoke(
+        "test-ai-marking",
+        { body: {} }
+      );
+
+      if (error) {
+        throw error;
+      }
+
+      if (!data?.success) {
+        throw new Error(data?.error || "The AI connection test failed.");
+      }
+
+      setNotice(
+        `AI connection successful. Sample answer was marked: ${data.sample_decision}.`
+      );
+    } catch (err) {
+      console.error("AI marking test error:", err);
+      setNotice(err.message || "Unable to test the AI connection.");
+    } finally {
+      setTestingAi(false);
+    }
   }
 
   // STUDENT STATISTICS
@@ -271,6 +303,15 @@ function Dashboard() {
           >
             <Users size={20} />
             Assignment Submissions →
+          </button>
+
+          <button
+            type="button"
+            onClick={handleTestAiMarking}
+            disabled={testingAi}
+          >
+            <Sparkles size={20} />
+            {testingAi ? "Testing AI..." : "Test AI Marking"}
           </button>
         </div>
 
