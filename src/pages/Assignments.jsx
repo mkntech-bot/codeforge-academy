@@ -713,6 +713,10 @@ function Assignments() {
                 <p className="assignment-help-text">
                   Use blank spaces or underscores in the question
                   to indicate where students should fill in their answers.
+                  To accept more than one correct wording, separate answers
+                  with a vertical bar (|), for example:
+                  hardware | hardware components | hardwares.
+                  Answers outside the accepted list are sent for instructor review.
                 </p>
               </>
             )}
