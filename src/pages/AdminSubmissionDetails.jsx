@@ -263,7 +263,9 @@ function AdminSubmissionDetails() {
   const manualAnswers = (submission.answers || []).filter(
     (answer) =>
       answer.question?.question_type === "written" ||
-      answer.question?.question_type === "programming"
+      answer.question?.question_type === "programming" ||
+      (answer.question?.question_type === "fill_blank" &&
+        answer.is_correct === null)
   );
 
   const manualMarks = manualAnswers.reduce((total, answer) => {
@@ -394,7 +396,9 @@ function AdminSubmissionDetails() {
 
               const needsManualMarking =
                 question?.question_type === "written" ||
-                question?.question_type === "programming";
+                question?.question_type === "programming" ||
+                (question?.question_type === "fill_blank" &&
+                  answer.is_correct === null);
 
               return (
                 <article
@@ -441,7 +445,9 @@ function AdminSubmissionDetails() {
                   {needsManualMarking && (
                     <div className="admin-details-manual">
                       <AlertCircle size={17} />
-                      Manual marking required.
+                      {question?.question_type === "fill_blank"
+                        ? "AI could not confidently mark this answer. Please review it manually."
+                        : "Manual marking required."}
                     </div>
                   )}
 
@@ -599,8 +605,8 @@ function AdminSubmissionDetails() {
 
           {!isPublished && !allManualMarksEntered && (
             <p>
-              Enter and save marks for every written and
-              programming answer before publishing the result.
+              Enter and save marks for every written, programming,
+              and AI-flagged fill-in-the-blank answer before publishing.
             </p>
           )}
         </section>
